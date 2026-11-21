@@ -350,11 +350,15 @@
             "plan_at": 1795276199,
             "job": 9122,
             "ig": {
-                "status": "posting",
-                "step": "GitHub is posting…",
-                "at": 1795276682
+                "status": "posted",
+                "done_at": 1795276772,
+                "permalink": "https://www.instagram.com/reel/DgAmy5nCJQN/",
+                "media_id": "18154945135543085",
+                "container_id": "17900091915418377",
+                "video_id": "",
+                "at": 1795276772
             }
         }
     },
-    "updated": 1795276682
+    "updated": 1795276772
 }
