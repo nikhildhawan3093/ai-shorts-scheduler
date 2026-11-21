@@ -337,11 +337,15 @@
                 "at": 1795272499
             },
             "fb": {
-                "status": "posting",
-                "step": "GitHub is posting…",
-                "at": 1795272501
+                "status": "posted",
+                "done_at": 1795272542,
+                "permalink": "https://www.facebook.com/reel/1156805860094845/",
+                "media_id": "1156805860094845",
+                "container_id": "17900079180418377",
+                "video_id": "1156805860094845",
+                "at": 1795272542
             }
         }
     },
-    "updated": 1795272501
+    "updated": 1795272542
 }
