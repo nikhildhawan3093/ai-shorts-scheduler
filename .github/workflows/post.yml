@@ -1,0 +1,41 @@
+# AI Shorts Studio T8: posts planned reels at their time, laptop on or off.
+# Every 15 min (GitHub may start it 5-30 min late) + started at once by the laptop when it plans reels.
+# Nothing planned any more -> cloud/due.php switches this timer off; the laptop switches it on again.
+name: post
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: write   # state.json + reading the reels in the "sched" release
+  actions: write    # switch the timer off when nothing is planned
+concurrency:
+  group: post
+  cancel-in-progress: false
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355   # run.php sleeps until each reel's time, then starts the next run itself (GitHub max 6 h)
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Git user (state.json commits, history clean-up)
+        run: |
+          git config user.name "ai-shorts-bot"
+          git config user.email "ai-shorts-bot@users.noreply.github.com"
+      - name: Anything due?
+        id: due
+        run: php cloud/due.php
+      - name: Database + tunnel tool
+        if: steps.due.outputs.due == '1'
+        run: |
+          sudo systemctl start mysql.service
+          mysql -uroot -proot < sql/schema.sql
+          sudo curl -fsSL -o /usr/local/bin/cloudflared https://github.com/cloudflare/cloudflared/releases/download/2026.10.7/cloudflared-linux-amd64
+          sudo chmod +x /usr/local/bin/cloudflared
+      - name: Post due reels
+        if: steps.due.outputs.due == '1'
+        env:
+          SCHED_KEY: ${{ secrets.SCHED_KEY }}
+        run: php cloud/run.php
