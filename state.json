@@ -335,8 +335,13 @@
                 "container_id": "17900079180418377",
                 "video_id": "",
                 "at": 1795272499
+            },
+            "fb": {
+                "status": "posting",
+                "step": "GitHub is posting…",
+                "at": 1795272501
             }
         }
     },
-    "updated": 1795272499
+    "updated": 1795272501
 }
